@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import path from 'path';
 import { ServerSocket } from './stockets';
 import { dbConnection } from '../database/config';
-
+import cors from 'cors'
 export class ServerForSockets {
 
   public app: express.Application;
@@ -25,7 +25,7 @@ export class ServerForSockets {
   middlewares() {
     this.app.use(express.static(path.resolve(__dirname, '../public')));
     this.app.use(express.json());
-
+    this.app.use(cors());
     // TODO - CORS
     
     //API Endpoints
