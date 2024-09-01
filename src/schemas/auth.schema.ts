@@ -16,9 +16,9 @@ export const registerSchema = z.object({
 //Para el login solamente quiero necesitar el email y el password del usuario
 export const loginSchema = z.object({
   email: z.string().email({
-    message: 'Please enter a valid email'
+    message: 'Incorrect email or password'
   }),
   password: z.string().min(6, {
-    message: 'Password must be at least 6 characters long'
+    message: 'Incorrect email or password'
   }),
 })

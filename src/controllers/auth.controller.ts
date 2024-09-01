@@ -41,7 +41,7 @@ async function authLoginUser(req: Request<{}, {}, z.infer<typeof loginSchema>>, 
 
     const { email, password } = req.body
 
-    const foundUser = await user.findOne({ email: email }, ['email', 'password']);
+    const foundUser = await user.findOne({ email: email }, ['email', 'password', 'name']);
 
     //Validando que el usuario exista
     if (!foundUser) {
@@ -58,7 +58,7 @@ async function authLoginUser(req: Request<{}, {}, z.infer<typeof loginSchema>>, 
     //Generando el token
     const token = await generateJWT(foundUser._id);
 
-    return res.json({ ok: true, message: 'Used logged in successfuly', token })
+    return res.json({ ok: true, message: 'Used logged in successfuly', token, user: foundUser })
 
   } catch (error) {
     console.log(error)
