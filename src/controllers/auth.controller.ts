@@ -31,7 +31,7 @@ async function authRegisterUser(req: Request<{}, {}, z.infer<typeof registerSche
     return res.json({ ok: true, message: 'User registered successfully', newUser, token })
 
   } catch (error) {
-    return res.status(500).json({ ok: false, message: 'Internal Server Error' });
+    return res.status(500).json({ ok: false, message: 'Internal Server Error', error: error });
   }
 }
 

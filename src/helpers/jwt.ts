@@ -1,6 +1,14 @@
 import * as jwt from 'jsonwebtoken';
 
 
+declare module 'jsonwebtoken' {
+  export interface Payload extends jwt.JwtPayload {
+      uid: string
+      iat: number
+      exp: number
+  }
+}
+
 const generateJWT = (uid: any) => {
   return new Promise((resolve, reject) => {
     const payload = { uid }
@@ -17,4 +25,18 @@ const generateJWT = (uid: any) => {
   })
 }
 
-export { generateJWT }
+type VerifyJWTResult = 
+  | { success: true; uid: string }
+  | { success: false; error: unknown };
+
+const verifyJWT = (token: string | undefined = ''): VerifyJWTResult => {
+  try {
+    const { uid } = <jwt.Payload>jwt.verify(token, process.env.JWT_KEY as string);
+    return { success: true, uid };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
+
+
+export { generateJWT, verifyJWT }
