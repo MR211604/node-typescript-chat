@@ -11,11 +11,15 @@ export class ServerSocket {
 
   socketEvents() {
     this.io.on('connection', (socket) => {
-      socket.on('message-to-server', (data) => {
-        console.log(data)
-        this.io.emit('message-from-server', data)
+      console.log('cliente conectado')
+
+      socket.on('disconnect', () => {
+        console.log('cliente desconectado')
       })
+
     })
+
+
   }
 
 }
