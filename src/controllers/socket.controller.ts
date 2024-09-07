@@ -1,4 +1,5 @@
 import user from "../models/user"
+import message from "../models/message"
 
 async function userConnected(_id: string) {
   const connectedUser = await user.findById(_id)
@@ -29,9 +30,26 @@ async function getUsers() {
 
 }
 
+interface Message {
+  from: string,
+  to: string,
+  message: string
+}
+
+async function saveMessage(payload: Message) {
+  try {
+    const newMessage = new message(payload)
+    await newMessage.save() //eso crea timestamp y guarda el mensaje
+    return newMessage
+  } catch (error) {
+    console.log('Ha ocurrido un error al guardar el mensaje:', error)
+    return false
+  }
+}
 
 export {
   userConnected,
   userDisconnected,
-  getUsers
+  getUsers,
+  saveMessage
 }
