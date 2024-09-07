@@ -28,7 +28,7 @@ async function authRegisterUser(req: Request<{}, {}, z.infer<typeof registerSche
     //Generando el token
     const token = await generateJWT(newUser._id);
 
-    return res.json({ ok: true, message: 'User registered successfully', newUser, token })
+    return res.json({ ok: true, message: 'User registered successfully', user: newUser, token })
 
   } catch (error) {
     return res.status(500).json({ ok: false, message: 'Internal Server Error', error: error });

@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import { verifyJWT } from "../helpers/jwt";
-import { userConnected, userDisconnected } from "../controllers/socket.controller";
+import { getUsers, userConnected, userDisconnected } from "../controllers/socket.controller";
 
 export class ServerSocket {
 
@@ -13,19 +13,19 @@ export class ServerSocket {
 
   socketEvents() {
     this.io.on('connection', async (socket) => {
-
       const verifiedToken = verifyJWT(socket.handshake.query['x-token']?.toString())
 
       if (!verifiedToken.success) {
         console.log('socket no identificado')
         return socket.disconnect()
-      }
-      console.log('cliente conectado', verifiedToken.uid)
+      }      
       await userConnected(verifiedToken.uid)
 
-      socket.on('disconnect', async () => {
-        console.log('cliente desconectado')
+      this.io.emit('lista-usuarios', await getUsers())
+
+      socket.on('disconnect', async () => {        
         await userDisconnected(verifiedToken.uid)
+        this.io.emit('lista-usuarios', await getUsers())
       })
 
       return
