@@ -19,9 +19,4 @@ const MessageSchema = new Schema({
   timestamps: true
 })
 
-MessageSchema.method('toJSON', function() {
-  const { _id, ...object } = this.toObject(); 
-  return object;
-});
-
 export default model('Message', MessageSchema);

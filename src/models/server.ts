@@ -29,7 +29,7 @@ export class ServerForSockets {
     // TODO - CORS
     
     //API Endpoints
-    this.app.use('/api/auth', require('../router/auth.routes'));
+    this.app.use('/api', require('../router/auth.routes'));
     this.app.use('/api/messages', require('../router/messages.routes'));
   }
 

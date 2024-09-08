@@ -13,7 +13,7 @@ async function getChat(req: Request, res: Response) {
         { from: uid, to: from },
         { from: from, to: uid }
       ]
-    }).sort({ createdAt: 'desc' }).limit(30);
+    }).sort({ createdAt: 'asc' }).limit(30);
 
     return res.status(200).json({ ok: true, message: 'Chat retrieved successfully', messages: lastThirtyMessages });
 

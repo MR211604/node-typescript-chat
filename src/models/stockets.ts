@@ -28,7 +28,8 @@ export class ServerSocket {
 
       socket.on('mensaje-personal', async (payload) => {
         const message = await saveMessage(payload)
-        console.log(message)
+        this.io.to(payload.to).emit('mensaje-personal', message)
+        this.io.to(payload.from).emit('mensaje-personal', message)
       })
 
       socket.on('disconnect', async () => {
